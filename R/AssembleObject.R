@@ -76,7 +76,7 @@ AssembleAssay <- function(assay, file, slots = NULL, verbose = TRUE) {
       } else {
         features
       }
-      obj <- SetAssayData(object = obj, slot = slot, new.data = dat)
+      obj <- SetAssayData(object = obj, layer = slot, new.data = dat)
     }
   }
   # Add meta features
