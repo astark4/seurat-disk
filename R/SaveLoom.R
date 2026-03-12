@@ -174,7 +174,7 @@ as.loom.Seurat <- function(
   lfile <- loom$new(filename = filename, mode = 'w')
   AddSlots <- function(assay) {
     for (slot in c('counts', 'scale.data')) {
-      mat <- GetAssayData(object = x, slot = slot, assay = assay)
+      mat <- GetAssayData(object = x, layer = slot, assay = assay)
       if (identical(x = dim(x = mat), y = dim(x = x))) {
         if (isTRUE(x = verbose)) {
           message("Adding slot ", slot, " for assay ", assay)
@@ -214,7 +214,7 @@ as.loom.Seurat <- function(
     message("Saving data from ", DefaultAssay(object = x), " as /matrix")
   }
   WriteMatrix(
-    x = GetAssayData(object = x, slot = 'data'),
+    x = GetAssayData(object = x, layer = 'data'),
     name = 'matrix',
     lfile = lfile,
     verbose = verbose
@@ -225,7 +225,7 @@ as.loom.Seurat <- function(
       message("Adding data for ", assay)
     }
     lfile$add_layer(
-      x = GetAssayData(object = x, slot = data, assay = assay),
+      x = GetAssayData(object = x, layer = data, assay = assay),
       name = assay,
       verbose = verbose
     )
