@@ -36,7 +36,7 @@ AssembleAssay <- function(assay, file, slots = NULL, verbose = TRUE) {
   if (!assay %in% names(x = index)) {
     stop("Cannot find assay ", assay, " in this h5Seurat file", call. = FALSE)
   }
-  slots.assay <- names(x = Filter(f = isTRUE, x = index[[assay]]$slots))
+  slots.assay <- names(x = Filter(f = isTRUE, x = index[[assay]]$layers))
   slots <- slots %||% slots.assay
   slots <- match.arg(arg = slots, choices = slots.assay, several.ok = TRUE)
   if (!any(c('counts', 'data') %in% slots)) {
