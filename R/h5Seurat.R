@@ -82,12 +82,12 @@ h5Seurat <- R6Class(
       index <- sapply(
         X = names(x = self[['assays']]),
         FUN = function(x) {
-          slots <- c('counts', 'data', 'scale.data')
-          check <- slots %in% names(x = self[['assays']][[x]])
-          names(x = check) <- slots
+          layers <- c('counts', 'data', 'scale.data')
+          check <- layers %in% names(x = self[['assays']][[x]])
+          names(x = check) <- layers
           check[['scale.data']] <- check[['scale.data']] && self[['assays']][[x]]$exists(name = 'scaled.features')
           check <- list(check)
-          names(x = check) <- 'slots'
+          names(x = check) <- 'layers'
           return(check)
         },
         simplify = FALSE,
@@ -404,7 +404,7 @@ print.h5SI <- function(x, ...) {
       align = 'center'
     ))
     catn(col_align(
-      text = symbols[x[[assay]]$slots + 1],
+      text = symbols[x[[assay]]$layers + 1],
       width = nchar(x = 'scale.data') + 1,
       align = 'center'
     ))
