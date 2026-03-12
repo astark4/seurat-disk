@@ -320,7 +320,7 @@ LoadLoom3.0 <- function(
     object <- SetAssayData(
       object = object,
       assay = assay,
-      slot = 'data',
+      layer = 'data',
       new.data = norm.data
     )
   }
@@ -334,7 +334,7 @@ LoadLoom3.0 <- function(
     object <- SetAssayData(
       object = object,
       assay = assay,
-      slot = 'scale.data',
+      layer = 'scale.data',
       new.data = scaled.data
     )
   }
