@@ -36,16 +36,17 @@ AssembleAssay <- function(assay, file, slots = NULL, verbose = TRUE) {
   if (!assay %in% names(x = index)) {
     stop("Cannot find assay ", assay, " in this h5Seurat file", call. = FALSE)
   }
-  slots.assay <- names(x = Filter(f = isTRUE, x = index[[assay]]$layers))
-  slots <- slots %||% slots.assay
-  slots <- match.arg(arg = slots, choices = slots.assay, several.ok = TRUE)
-  if (!any(c('counts', 'data') %in% slots)) {
+  layers<-slots
+  layers.assay <- names(x = Filter(f = isTRUE, x = index[[assay]]$layers))
+  layers <- layers %||% layers.assay
+  layers <- match.arg(arg = layers, choices = layers.assay, several.ok = TRUE)
+  if (!any(c('counts', 'data') %in% layers)) {
     stop("At least one of 'counts' or 'data' must be loaded", call. = FALSE)
   }
   assay.group <- file[['assays']][[assay]]
   features <- FixFeatures(features = assay.group[['features']][])
   # Add counts if not data, otherwise add data
-  if ('counts' %in% slots && !'data' %in% slots) {
+  if ('counts' %in% layers && !'data' %in% layers) {
     if (verbose) {
       message("Initializing ", assay, " with counts")
     }
@@ -64,19 +65,19 @@ AssembleAssay <- function(assay, file, slots = NULL, verbose = TRUE) {
   }
   Key(object = obj) <- Key(object = assay.group)
   # Add remaining slots
-  for (slot in slots) {
-    if (IsMatrixEmpty(x = GetAssayData(object = obj, layer = slot))) {
+  for (layer in layers) {
+    if (IsMatrixEmpty(x = GetAssayData(object = obj, layer = layer))) {
       if (verbose) {
-        message("Adding ", slot, " for ", assay)
+        message("Adding ", layer, " for ", assay)
       }
-      dat <- as.matrix(x = assay.group[[slot]])
+      dat <- as.matrix(x = assay.group[[layer]])
       colnames(x = dat) <- Cells(x = file)
-      rownames(x = dat) <- if (slot == 'scale.data') {
+      rownames(x = dat) <- if (layer == 'scale.data') {
         FixFeatures(features = assay.group[['scaled.features']][])
       } else {
         features
       }
-      obj <- SetAssayData(object = obj, layer = slot, new.data = dat)
+      obj <- SetAssayData(object = obj, layer = layer, new.data = dat)
     }
   }
   # Add meta features
