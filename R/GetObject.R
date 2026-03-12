@@ -90,8 +90,8 @@ GetAssays <- function(assays, index) {
       x = assays.checked[assays.use],
       use.names = FALSE
     ))
-    slots.use <- slots.use[match(x = names(x = index[[i]]$slots), table = slots.use)]
-    slots.use <- as.character(x = na.omit(object = slots.use[index[[i]]$slots]))
+    slots.use <- slots.use[match(x = names(x = index[[i]]$layers), table = slots.use)]
+    slots.use <- as.character(x = na.omit(object = slots.use[index[[i]]$layers]))
     assays[[i]] <- slots.use
   }
   for (i in seq_along(along.with = assays)) {
