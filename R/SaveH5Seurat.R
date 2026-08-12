@@ -206,13 +206,13 @@ as.h5Seurat.Seurat <- function(
   )
   # Add Assays
   for (assay in Assays(object = x)) {
-    layer_class<-lapply(assay@layers,class)
-    transform_layers<-names(layer_class)[layer_class=='RenameDims']
-    for(layer in transform_layers)
-    {
-      assay@layers[[layer]]<-as(object=assay@layers[[layer]],
-                                Class=switch(layer,scale.data='Matrix','dgCMatrix'))
-    }
+    # layer_class<-lapply(assay@layers,class)
+    # transform_layers<-names(layer_class)[layer_class=='RenameDims']
+    # for(layer in transform_layers)
+    # {
+    #   assay@layers[[layer]]<-as(object=assay@layers[[layer]],
+    #                             Class=switch(layer,scale.data='Matrix','dgCMatrix'))
+    # }
     WriteH5Group(
       x = x[[assay]],
       name = assay,
